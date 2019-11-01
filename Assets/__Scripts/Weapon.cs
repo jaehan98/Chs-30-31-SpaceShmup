@@ -36,7 +36,8 @@ public class WeaponDefinition
     public float delayBetweenShots = 0;
     public float velocity = 20; // Speed of projectiles
 }
-public class Weapon : MonoBehaviour {
+public class Weapon : MonoBehaviour
+{
     static public Transform PROJECTILE_ANCHOR;
 
     [Header("Set Dynamically")]
@@ -45,58 +46,51 @@ public class Weapon : MonoBehaviour {
     public WeaponDefinition def;
     public GameObject collar;
     public float lastShotTime; // Time last shot was fired
+
     private Renderer collarRend;
 
-    private void Start()
+    void Start()
     {
         collar = transform.Find("Collar").gameObject;
         collarRend = collar.GetComponent<Renderer>();
 
         // Call SetType() for the default _type of WeaponType.none
-        SetType(_type);
+        SetType(_type);                                                    // a
 
         // Dynamically create an anchor for all Projectiles
-        if(PROJECTILE_ANCHOR == null)
-        {
+        if (PROJECTILE_ANCHOR == null)
+        {                                     // b
             GameObject go = new GameObject("_ProjectileAnchor");
             PROJECTILE_ANCHOR = go.transform;
         }
-
         // Find the fireDelegate of the root GameObject
-        GameObject rootGO = transform.root.gameObject;
-        if(rootGO.GetComponent<Hero>() != null)
-        {
+        GameObject rootGO = transform.root.gameObject;                       // c
+        if (rootGO.GetComponent<Hero>() != null)
+        {                         // d
             rootGO.GetComponent<Hero>().fireDelegate += Fire;
         }
     }
 
     public WeaponType type
     {
-        get
-        {
-            return (_type);
-        }
-        set
-        {
-            SetType(value);
-        }
+        get { return (_type); }
+        set { SetType(value); }
     }
 
     public void SetType(WeaponType wt)
     {
         _type = wt;
         if (type == WeaponType.none)
-        {
+        {                                       // e
             this.gameObject.SetActive(false);
             return;
         }
-        else
-        {
+        else {
             this.gameObject.SetActive(true);
         }
-        def = Main.GetWeaponDefinition(_type);
+        def = Main.GetWeaponDefinition(_type);                               // f
         collarRend.material.color = def.color;
-        lastShotTime = 0; // You can fire immediately after _type is set.
+        lastShotTime = 0; // You can fire immediately after _type is set.    // g
     }
 
     public void Fire()
