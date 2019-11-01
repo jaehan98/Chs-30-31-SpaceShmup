@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour {
     static public Hero S; // Singleton
+    void Awake() {
+        S = this;  // Set the Singleton
+//        fireDelegate += TempFire;
 
+        // Reset the weapons to start _Hero with 1 blaster
+        ClearWeapons();
+        weapons[0].SetType(WeaponType.blaster);
+    }
     [Header("Set in Inspector")]
     // These fields control the movement of the ship
     public float speed = 30;
@@ -18,6 +25,7 @@ public class Hero : MonoBehaviour {
     [Header("Set Dynamically")]
     [SerializeField]
     public float _shieldLevel = 1;
+
 
     // This variable holds a reference to the last triggering GameObject
     private GameObject lastTriggerGo = null;
