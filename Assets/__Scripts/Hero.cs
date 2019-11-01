@@ -24,10 +24,13 @@ public class Hero : MonoBehaviour {
 
 
     //TODO: Add function delegate declaration
+    
+        // Declare a new delegate type WeaponFireDelegate 
+    public delegate void WeaponFireDelegate();                           // a 
+    // Create a WeaponFireDelegate field named fireDelegate. 
+    public WeaponFireDelegate fireDelegate;
 
-
-
-	void Start()
+    void Start()
     {
         if (S == null)
         {
@@ -43,9 +46,9 @@ public class Hero : MonoBehaviour {
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
     }
-	
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
     {
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal");
@@ -61,25 +64,25 @@ public class Hero : MonoBehaviour {
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {                          
-            TempFire();                                                   
-        }
+
 
         //TODO: Replace the TempFire call with the weapon delgate call
         // Use the fireDelegate to fire Weapons
         // First, make sure the button is pressed: Axis("Jump")
         // Then ensure that fireDelegate isn't null to avoid an error
+        if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        {            // d 
+            fireDelegate();
 
 
-
+        }
     }
 
 
 
 
     //TODO: replace or comment out later
-    void TempFire()
+  /*  void TempFire()
     {                                                      
         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
 
@@ -93,7 +96,7 @@ public class Hero : MonoBehaviour {
         proj.type = WeaponType.blaster;
         float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
         rigidB.velocity = Vector3.up * tSpeed;
-    }
+    }*/
 
 
     private void OnTriggerEnter(Collider other)
