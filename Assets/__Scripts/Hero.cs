@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour {
     static public Hero S; // Singleton
-    void Awake() {
-        S = this;  // Set the Singleton
-//        fireDelegate += TempFire;
 
-        // Reset the weapons to start _Hero with 1 blaster
-        ClearWeapons();
-        weapons[0].SetType(WeaponType.blaster);
-    }
     [Header("Set in Inspector")]
     // These fields control the movement of the ship
     public float speed = 30;
@@ -187,7 +180,7 @@ public class Hero : MonoBehaviour {
 
     Weapon GetEmptyWeaponSlot()
     {
-        for (int i=0; i<weapons.Length; i++)
+        for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i].type == WeaponType.none)
             {
